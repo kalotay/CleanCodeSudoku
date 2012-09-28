@@ -26,17 +26,17 @@ namespace CleanCode.Sudoku.Tests
     {
         var sudoku = new Sudoku(new SudokuLegalMoveVerifier());
         var problemParser = new SudokuProblemParser();
-		int[,] problemGrid = problemParser.parseProblem(SudokuExamples.NOT_SOLVABLE_PROBLEM);
-		int[,] actualSolution = sudoku.solve(problemGrid);
+		var problemGrid = problemParser.parseProblem(SudokuExamples.NOT_SOLVABLE_PROBLEM);
+		var actualSolution = sudoku.solve(problemGrid);
 		Assert.IsNull(actualSolution);
 	}
 
 	private void check(String problem, String solution) {
 	    var sudoku = new Sudoku(new SudokuLegalMoveVerifier());
 	    var problemParser = new SudokuProblemParser();
-	    int[,] solutionGrid = problemParser.parseProblem(solution);
-		int[,] problemGrid = problemParser.parseProblem(problem);
-		int[,] actualSolution = sudoku.solve(problemGrid);
+	    var solutionGrid = problemParser.parseProblem(solution);
+		var problemGrid = problemParser.parseProblem(problem);
+		var actualSolution = sudoku.solve(problemGrid);
 	    var prettyPrinter = new SudokuPrettyPrinter();
 		Assert.That(prettyPrinter.prettyPrint(actualSolution) , Is.EqualTo(prettyPrinter.prettyPrint(solutionGrid) ));
 	}
