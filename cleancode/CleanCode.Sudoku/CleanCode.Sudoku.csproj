@@ -49,8 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SudokuPrettyPrinter.cs" />
     <Compile Include="Sudoku.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SudokuLegalMoveVerifier.cs" />
+    <Compile Include="SudokuProblemParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

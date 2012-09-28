@@ -60,15 +60,21 @@ namespace CleanCode.Sudoku
  */
     public class Sudoku
     {
+        private readonly ISudokuLegalMoveVerifier _sudokuLegalMoveVerifier;
 
-        public static int[,] solve(int[,] matrix)
+        public Sudoku(ISudokuLegalMoveVerifier sudokuLegalMoveVerifier)
+        {
+            _sudokuLegalMoveVerifier = sudokuLegalMoveVerifier;
+        }
+
+        public int[,] solve(int[,] matrix)
         {
             if (solve(0, 0, matrix)) // solves in place
                 return matrix;
             return null;
         }
 
-        static bool solve(int i, int j, int[,] cells)
+        bool solve(int i, int j, int[,] cells)
         {
             if (i == 9)
             {
@@ -81,7 +87,7 @@ namespace CleanCode.Sudoku
 
             for (int val = 1; val <= 9; ++val)
             {
-                if (legal(i, j, val, cells))
+                if (_sudokuLegalMoveVerifier.IsMoveLegal(i, j, val, cells))
                 {
                     cells[i,j] = val;
                     if (solve(i + 1, j, cells))
@@ -91,61 +97,5 @@ namespace CleanCode.Sudoku
             cells[i,j] = 0; // reset on backtrack
             return false;
         }
-
-        static bool legal(int i, int j, int val, int[,] cells)
-        {
-            for (int k = 0; k < 9; ++k)
-                // row
-                if (val == cells[k,j])
-                    return false;
-
-            for (int k = 0; k < 9; ++k)
-                // col
-                if (val == cells[i,k])
-                    return false;
-
-            int boxRowOffset = (i / 3) * 3;
-            int boxColOffset = (j / 3) * 3;
-            for (int k = 0; k < 3; ++k)
-                // box
-                for (int m = 0; m < 3; ++m)
-                    if (val == cells[boxRowOffset + k,boxColOffset + m])
-                        return false;
-
-            return true; // no violations, so it's legal
-        }
-
-        public static int[,] parseProblem(String grid) {
-		int[,] problem = new int[9,9];
-		for (int i = 0; i < 81; i++) {
-			int x = i / 9;
-			int y = i % 9;
-			problem[x, y] = Int32.Parse("" + grid[i]);
-		}
-		return problem;
-	}
-
-        public static String prettyPrint(int[,] grid)
-        {
-            StringBuilder buffer = new StringBuilder();
-            for (int i = 0; i < 9; ++i)
-            {
-                if (i % 3 == 0)
-                    buffer.Append(" -----------------------\n");
-                for (int j = 0; j < 9; ++j)
-                {
-                    if (j % 3 == 0)
-                    {
-                        buffer.Append("| ");
-                    }
-                    buffer.Append(grid[i,j] == 0 ? " " : (grid[i,j].ToString()));
-                    buffer.Append(' ');
-                }
-                buffer.Append("|\n");
-            }
-            buffer.Append(" -----------------------\n");
-            return buffer.ToString();
-        }
-
     }
 }
