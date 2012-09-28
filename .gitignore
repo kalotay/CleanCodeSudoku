@@ -1,0 +1,15 @@
+#resharper
+cleancode/_ReSharper.*/*
+cleancode/_ReSharper.*/**/*
+cleancode/*.resharper.user
+
+#binaries
+cleancode/*.suo
+cleancode/**/obj
+cleancode/**/obj/*
+cleancode/**/obj/**/*
+cleancode/**/bin
+cleancode/**/bin/* 
+cleancode/**/bin/**/*
+
+*.user
